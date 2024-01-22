@@ -1,0 +1,13 @@
+use_frameworks!
+
+platform :ios, '10.0'
+
+target 'TronLinkCore_Example' do
+  pod 'TronLinkCore', :path => '../'
+
+  target 'TronLinkCore_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
