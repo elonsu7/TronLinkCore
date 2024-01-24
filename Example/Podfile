@@ -4,6 +4,16 @@ platform :ios, '10.0'
 
 target 'TronLinkCore_Example' do
   pod 'TronLinkCore', :path => '../'
+  
+#  pod 'TrustKeystore', :git => 'https://github.com/TRON-US/TrustKeystore', :branch => 'TrustKeystore_0.4.0'
+#  pod 'TrustCore', :git => 'https://github.com/TRON-US/TrustCore', :branch => 'TrustCore_0.0.7'
+#  pod 'TrezorCrypto', :git => 'https://github.com/TRON-US/trezor-crypto-ios', inhibit_warnings: true
+#  pod 'CryptoSwift'
+  
+  
+#  pod 'web3swift.pod'
+#  pod 'CryptoSwift', :git => 'https://github.com/TRON-US/CryptoSwift', :branch => 'stack'
+#  pod 'web3swift.pod', :git => 'https://github.com/TRON-US/web3swift', :branch => 'master'
 
   target 'TronLinkCore_Tests' do
     inherit! :search_paths
