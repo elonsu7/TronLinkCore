@@ -53,4 +53,15 @@ TODO: Add long description of the pod here.
    s.dependency 'web3swift'
    s.dependency 'TrezorCrypto', '~> 0.0.8'
    s.dependency 'SwiftProtobuf', '~> 1.0'
+   
+   s.subspec 'no-arc' do |sp|
+    sp.source_files  = "TronLinkCore/Classes/gRPC/core/contract/SmartContract.pbobjc.{h,m}",
+    "TronLinkCore/Classes/gRPC/google/api/Annotations.pbobjc.{h,m}",
+    "TronLinkCore/Classes/gRPC/core/Tron.pbobjc.{h,m}",
+    "TronLinkCore/Classes/gRPC/core/contract/Common.pbobjc.{h,m}",
+    "TronLinkCore/Classes/gRPC/api/Zksnark.pbobjc.{h,m}",
+    "TronLinkCore/Classes/gRPC/google/protobuf/Descriptor.pbobjc.{h,m}",
+    "TronLinkCore/Classes/gRPC/api/Api.pbobjc.{h,m}"
+    sp.requires_arc = false
+   end
 end

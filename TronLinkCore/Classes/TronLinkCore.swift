@@ -11,10 +11,10 @@ enum TronMessageSignV2Type {
 
 class TronLinkCore: NSObject {
 
-    @objc static let shareManager = TronLinkCore()
+    @objc public static let shareManager = TronLinkCore()
     
-    let keyStore: KeyStore
-    let keysDirectory: URL
+    public let keyStore: KeyStore
+    public let keysDirectory: URL
 
     private let datadir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
 
@@ -38,7 +38,7 @@ class MemoryAESPasswordModel: NSObject {
 
 //MARK: - Create
 extension TronLinkCore {
-    func createWalletAccount(password: String, completion: @escaping (Result<Account, KeystoreError>) -> Void) {
+    public func createWalletAccount(password: String, completion: @escaping (Result<Account, KeystoreError>) -> Void) {
         do {
             let account = try keyStore.createAccount(password: password, type: .hierarchicalDeterministicWallet)
             completion(.success(account))
@@ -50,7 +50,7 @@ extension TronLinkCore {
 
 //MARK: - Export
 extension TronLinkCore {
-    func walletExportPrivateKey(password: String, address: String) -> String {
+    public func walletExportPrivateKey(password: String, address: String) -> String {
         for account in self.keyStore.accounts {
             if address == account.address.data.addressString {
                 do {
@@ -66,7 +66,7 @@ extension TronLinkCore {
     }
     
     
-    func walletExportMnemonic(password: String, address: String) -> String {
+    public func walletExportMnemonic(password: String, address: String) -> String {
 
         for account in self.keyStore.accounts {
             if address == account.address.data.addressString {
@@ -93,7 +93,7 @@ extension TronLinkCore {
     ///   - address: wallet address
     ///   - dappChainId: Optional, defalut is mainChain, dappChainId needs to pass in ChianId
     /// - Returns: signed TronTransaction
-    func signTranscation(transaction: TronTransaction, password: String, address: String, _ dappChainId: String = "") -> Result<TronTransaction, KeystoreError> {
+    public func signTranscation(transaction: TronTransaction, password: String, address: String, _ dappChainId: String = "") -> Result<TronTransaction, KeystoreError> {
         
         for account in self.keyStore.accounts {
             if address == account.address.data.addressString {
@@ -131,7 +131,7 @@ extension TronLinkCore {
     ///   - password: wallet password
     ///   - address: wallet address
     /// - Returns: signed string
-    func signString(unSignedString: String, password: String, address: String) -> String {
+    public func signString(unSignedString: String, password: String, address: String) -> String {
         let signString = unSignedString.signStringHexEncoded
         let privatekey = walletExportPrivateKey(password: password, address: address)
         let privatekeyData = Data.init(hex: privatekey)
@@ -162,7 +162,7 @@ extension TronLinkCore {
     ///   - address: wallet address
     ///   - messageType: Optional, defalut is SIGN_MESSAGE_V2_STRING
     /// - Returns: signed string
-    func signStringV2(unSignedString: String, password: String, address: String, _ messageType:TronMessageSignV2Type = .SIGN_MESSAGE_V2_STRING) -> String {
+    public func signStringV2(unSignedString: String, password: String, address: String, _ messageType:TronMessageSignV2Type = .SIGN_MESSAGE_V2_STRING) -> String {
         let privatekey = walletExportPrivateKey(password: password, address: address)
         let privatekeyData = Data.init(hex: privatekey)
 
@@ -199,32 +199,6 @@ extension TronLinkCore {
         }
         
         return unmarshalledSignature.r.toHexString().add0x + unmarshalledSignature.s.toHexString() + unmarshalledSignature.v.description.hex
-    }
-}
-
-//MARK: - Address
-extension TronLinkCore {
-    
-    func isTRXAddress() -> Bool {
-//        if self.isEmpty {
-//            return false
-//        }
-//        
-//        let data = self.base58CheckData
-//        if data == nil {
-//            return false
-//        }
-//        
-//        var string = data?.toHexString()
-//        
-//        if string?.hasPrefix("0x") ?? false {
-//            string = string?.substring(from: 2)
-//        }
-//        
-//        if (string?.hasPrefix("41") ?? false) && (string?.count ?? 0) == 42 {
-//            return true
-//        }
-        return false
     }
 }
 
