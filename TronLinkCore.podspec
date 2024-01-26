@@ -51,7 +51,6 @@ TODO: Add long description of the pod here.
    s.dependency 'TrezorCrypto', '0.0.9'
    s.dependency 'CryptoSwift', '1.1.3'
    s.dependency 'web3swift', '2.2.1'
-   s.dependency 'TrezorCrypto', '~> 0.0.8'
    s.dependency 'SwiftProtobuf', '~> 1.0'
    
    s.subspec 'no-arc' do |sp|
