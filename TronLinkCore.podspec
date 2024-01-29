@@ -30,13 +30,13 @@ TODO: Add long description of the pod here.
 
   s.ios.deployment_target = '10.0'
 
-  s.source_files = 'TronLinkCore/Classes/**/*'
+  s.source_files = 'TronLinkCore/Classes/**/*','TronLinkCore/Classes/TronLinkCore.swift'
   
   # s.resource_bundles = {
   #   'TronLinkCore' => ['TronLinkCore/Assets/*.png']
   # }
 
-   s.public_header_files = 'TronLinkCore/Classes/TronLinkCore.swift'
+#   s.public_header_files = 'TronLinkCore/Classes/TronLinkCore.swift'
   # s.frameworks = 'UIKit', 'MapKit'
    
    s.dependency 'gRPC', '1.49.0'
