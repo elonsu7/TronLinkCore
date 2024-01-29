@@ -36,7 +36,7 @@ TODO: Add long description of the pod here.
   #   'TronLinkCore' => ['TronLinkCore/Assets/*.png']
   # }
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
+   s.public_header_files = 'TronLinkCore/Classes/TronLinkCore.swift'
   # s.frameworks = 'UIKit', 'MapKit'
    
    s.dependency 'gRPC', '1.49.0'
@@ -47,11 +47,8 @@ TODO: Add long description of the pod here.
    s.dependency '!ProtoCompiler', '3.21.5'
    s.dependency '!ProtoCompiler-gRPCPlugin', '1.49.0'
    
-   s.dependency 'BigInt', '~> 3.1'
-   s.dependency 'TrezorCrypto'
-   s.dependency 'CryptoSwift'
-   s.dependency 'web3swift'
-   s.dependency 'SwiftProtobuf', '~> 1.0'
+   s.dependency 'TronKeystore'
+   s.dependency 'TronWeb3Swift', '~> 0.3.0'
    
    s.subspec 'no-arc' do |sp|
     sp.source_files  = "TronLinkCore/Classes/gRPC/core/contract/SmartContract.pbobjc.{h,m}",

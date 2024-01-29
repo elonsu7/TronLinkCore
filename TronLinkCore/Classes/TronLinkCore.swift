@@ -1,6 +1,8 @@
 import UIKit
+import TronCore
+import TronKeystore
+import web3swift
 import CryptoSwift
-import secp256k1_swift
 
 enum TronMessageSignV2Type {
     //v2
@@ -9,9 +11,8 @@ enum TronMessageSignV2Type {
     case SIGN_MESSAGE_V2_ARRAY
 }
 
-class TronLinkCore: NSObject {
-
-    @objc public static let shareManager = TronLinkCore()
+class TronLinkCore {
+    static let shareManager = TronLinkCore()
     
     public let keyStore: KeyStore
     public let keysDirectory: URL
@@ -29,6 +30,9 @@ class TronLinkCore: NSObject {
     
     var memoryPasswordArray: Array = Array<MemoryAESPasswordModel>()
     
+    public func test() {
+        
+    }
 }
 
 class MemoryAESPasswordModel: NSObject {
@@ -97,13 +101,13 @@ extension TronLinkCore {
         
         for account in self.keyStore.accounts {
             if address == account.address.data.addressString {
-                if let hash: Data = transaction.rawData.data()?.sha256(), let list = transaction.rawData.contractArray, list.count > 0 {
+                if let hash: Data = transaction.rawData.data()?.sha256T(), let list = transaction.rawData.contractArray, list.count > 0 {
                     for _ in list {
                         var newHash: Data = hash
                         if !dappChainId.isEmpty {
                             if let mainGateData = Data(hexString: dappChainId) {
                                 newHash.append(mainGateData)
-                                newHash = newHash.sha256()
+                                newHash = newHash.sha256T()
                             }
                         }
                         do {
@@ -134,7 +138,7 @@ extension TronLinkCore {
     public func signString(unSignedString: String, password: String, address: String) -> String {
         let signString = unSignedString.signStringHexEncoded
         let privatekey = walletExportPrivateKey(password: password, address: address)
-        let privatekeyData = Data.init(hex: privatekey)
+        let prek = PrivateKey.init(Data.init(hex: privatekey))
         let persondata = Data.init(hex: signString)
 
         var apendData = Data()
@@ -144,15 +148,17 @@ extension TronLinkCore {
         apendData.append(persondata)
 
         let sha3 = SHA3(variant: .keccak256)
-        let Sh3Data =  Data(sha3.calculate(for: apendData.bytes))
+        let Sh3Data =  Data(sha3.calculate(for: apendData.bytesT))
+        do {
+            let  signature = try prek.sign(hash: Sh3Data)
+            if #available(iOS 17, *) {
+                return signature.data[0..<32].toHexString().add0x + signature.data[32..<64].toHexString() + (signature.v+27).hex
+            }
+            return signature.r.serialize().toHexString().add0x + signature.s.serialize().toHexString() + (signature.v+27).hex
             
-        let  serializedSignature = SECP256K1.signForRecovery(hash: Sh3Data, privateKey: privatekeyData).serializedSignature ?? Data()
-        
-        guard let unmarshalledSignature = SECP256K1.unmarshalSignature(signatureData: serializedSignature) else {
+        }catch _ {
             return ""
         }
-        
-        return unmarshalledSignature.r.toHexString().add0x + unmarshalledSignature.s.toHexString() + unmarshalledSignature.v.description.hex
     }
     
     /// sign string v2
@@ -164,8 +170,8 @@ extension TronLinkCore {
     /// - Returns: signed string
     public func signStringV2(unSignedString: String, password: String, address: String, _ messageType:TronMessageSignV2Type = .SIGN_MESSAGE_V2_STRING) -> String {
         let privatekey = walletExportPrivateKey(password: password, address: address)
-        let privatekeyData = Data.init(hex: privatekey)
-
+        let prek = PrivateKey.init(Data.init(hex: privatekey))
+        
         var persondata = Data.init(hex: unSignedString)
         if case .SIGN_MESSAGE_V2_ARRAY = messageType { //bytes
             let list = unSignedString.split(separator: ",")
@@ -190,15 +196,17 @@ extension TronLinkCore {
         apendData.append(persondata)
 
         let sha3 = SHA3(variant: .keccak256)
-        let Sh3Data =  Data(sha3.calculate(for: apendData.bytes))
-        
-        let  serializedSignature = SECP256K1.signForRecovery(hash: Sh3Data, privateKey: privatekeyData).serializedSignature ?? Data()
-        
-        guard let unmarshalledSignature = SECP256K1.unmarshalSignature(signatureData: serializedSignature) else {
+        let Sh3Data =  Data(sha3.calculate(for: apendData.bytesT))
+        do {
+            let  signature = try prek.sign(hash: Sh3Data)
+            if #available(iOS 17, *) {
+                return signature.data[0..<32].toHexString().add0x + signature.data[32..<64].toHexString() + (signature.v+27).hex
+            }
+            return signature.r.serialize().toHexString().add0x + signature.s.serialize().toHexString() + (signature.v+27).hex
+
+        }catch _ {
             return ""
         }
-        
-        return unmarshalledSignature.r.toHexString().add0x + unmarshalledSignature.s.toHexString() + unmarshalledSignature.v.description.hex
     }
 }
 

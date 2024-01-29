@@ -1,5 +1,6 @@
 
 import Foundation
+import CryptoSwift
 
 extension Data {
     var hex: String {
@@ -16,5 +17,13 @@ extension Data {
     
     var addressString: String {
         return String(base58CheckEncoding: self)
+    }
+    
+    public func sha256T() -> Data {
+      Data(Digest.sha256(bytes))
+    }
+    
+    public var bytesT: Array<UInt8> {
+      Array(self)
     }
 }
