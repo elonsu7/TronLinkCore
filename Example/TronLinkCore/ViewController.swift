@@ -31,10 +31,6 @@ class ViewController: UIViewController {
         self.keysDirectory = URL(fileURLWithPath: datadir + keysSubfolder)
         self.keyStore = try! KeyStore(keyDirectory: keysDirectory)
         // Do any additional setup after loading the view, typically from a nib.
-        
-        TronLinkCore.createWalletAccount(password: "") { <#Result<Account, KeystoreError>#> in
-            <#code#>
-        }
     }
 
     override func didReceiveMemoryWarning() {
