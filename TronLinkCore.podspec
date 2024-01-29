@@ -50,14 +50,17 @@ TODO: Add long description of the pod here.
    s.dependency 'TronKeystore'
    s.dependency 'TronWeb3Swift', '~> 0.3.0'
    
-   s.subspec 'no-arc' do |sp|
-    sp.source_files  = "TronLinkCore/Classes/gRPC/core/contract/SmartContract.pbobjc.{h,m}",
-    "TronLinkCore/Classes/gRPC/google/api/Annotations.pbobjc.{h,m}",
-    "TronLinkCore/Classes/gRPC/core/Tron.pbobjc.{h,m}",
-    "TronLinkCore/Classes/gRPC/core/contract/Common.pbobjc.{h,m}",
-    "TronLinkCore/Classes/gRPC/api/Zksnark.pbobjc.{h,m}",
-    "TronLinkCore/Classes/gRPC/google/protobuf/Descriptor.pbobjc.{h,m}",
-    "TronLinkCore/Classes/gRPC/api/Api.pbobjc.{h,m}"
-    sp.requires_arc = false
-   end
+   s.requires_arc = false
+   s.requires_arc = ['Classes/Tool/*', 'Classes/types/*', 'Classes/TronLinkCore.swift']
+   
+#   s.subspec 'no-arc' do |sp|
+#    sp.source_files  = "TronLinkCore/Classes/gRPC/core/contract/SmartContract.pbobjc.{h,m}",
+#    "TronLinkCore/Classes/gRPC/google/api/Annotations.pbobjc.{h,m}",
+#    "TronLinkCore/Classes/gRPC/core/Tron.pbobjc.{h,m}",
+#    "TronLinkCore/Classes/gRPC/core/contract/Common.pbobjc.{h,m}",
+#    "TronLinkCore/Classes/gRPC/api/Zksnark.pbobjc.{h,m}",
+#    "TronLinkCore/Classes/gRPC/google/protobuf/Descriptor.pbobjc.{h,m}",
+#    "TronLinkCore/Classes/gRPC/api/Api.pbobjc.{h,m}"
+#    sp.requires_arc = false
+#   end
 end
