@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'TronLinkCore'
-  s.version          = '0.2.0'
+  s.version          = '0.3.0'
   s.summary          = 'TronLink Wallet Core'
 
 # This description is used to generate tags and improve search results.
@@ -22,11 +22,9 @@ TODO: Add long description of the pod here.
                        DESC
 
   s.homepage         = 'https://github.com/xuchina67/TronLinkCore'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'elonGT' => 'elonGT@tron.network' }
   s.source           = { :git => 'https://github.com/xuchina67/TronLinkCore', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '10.0'
 
