@@ -22,7 +22,7 @@ pod 'TronLinkCore'
 
 ## Author
 
-elon xu, elon.xu@tron.network
+elonGT, elonGT@tron.network
 
 ## License
 
